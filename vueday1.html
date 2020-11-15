@@ -1,3 +1,4 @@
+/* * @Author: mikey.zhaopeng * @Date: 2020-11-15 21:37:58 * @Last Modified by: mikey.zhaopeng * @Last Modified time: 2020-11-15 21:37:58 */ /* * @Author: mikey.zhaopeng * @Date: 2020-11-15 21:37:56 * @Last Modified by: mikey.zhaopeng * @Last Modified time: 2020-11-15 21:37:56 */ /* * @Author: mikey.zhaopeng * @Date: 2020-11-15 21:37:56 * @Last Modified by: mikey.zhaopeng * @Last Modified time: 2020-11-15 21:37:56 */ /* * @Author: mikey.zhaopeng * @Date: 2020-11-15 21:37:55 * @Last Modified by: mikey.zhaopeng * @Last Modified time: 2020-11-15 21:37:55 */
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -54,16 +55,52 @@
         }
       });
       // v-once v-html v-pre v-cloak 一次/解析标签/不解析/createdbefore css
-      setTimeout(() => {
-        let app3 = new Vue({
-          el: '#app3',
-          data: {
-            name: 'xu',
-            say: 'hello',
-            url: '<a href="baidu.com">连接</a>'
-          }
-        });
-      }, 2000);
+      // setTimeout(() => {
+      //   let app3 = new Vue({
+      //     el: '#app3',
+      //     data: {
+      //       name: 'xu',
+      //       say: 'hello',
+      //       url: '<a href="baidu.com">连接</a>'
+      //     }
+      //   });
+      // }, 2000);
     </script>
   </body>
+  <!-- 双向数据绑定 数据=》视图=》数据 -->
+
+  <div id="app5">
+    <p>{{msg}}</p>
+    <input type="text" v-model="msg" />
+    <label for="check">{{checked}}</label>
+    <input type="checkbox" id="check" v-model="checked" />
+    <select name="select" v-model="optionValue">
+      <option v-for="(item,key) in obj" :value="item.money" :key="item.name">{{item.name}}</option>
+    </select>
+    {{optionValue}}
+  </div>
+  <script>
+    let app5 = new Vue({
+      el: '#app5',
+      data: {
+        msg: '666',
+        checked: false,
+        optionValue: '',
+        arr: [2000, 2001, 2002, 2003],
+        obj: [
+          { name: 'xu', money: 111 },
+          { name: 'xu2', money: 888 },
+          { name: 'xu3', money: 0 }
+        ]
+      },
+      created() {
+        this.optionValue = this.obj[0]['money'];
+      },
+      methods: {}
+    });
+  </script>
+
+  <div id="app7">
+    <p></p>
+  </div>
 </html>
