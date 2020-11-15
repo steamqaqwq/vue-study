@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.0/vue.js"></script>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="app">Your name is {{message}}</h1>
+    <h1>ListData列表数据</h1>
+    <div id="app2">
+      <ul>
+        <li v-for="item in arr">{{item}}</li>
+      </ul>
+      <div>{{count}}</div>
+      <button v-on:click="upCount">+</button>
+      <button v-on:click="deCount">-</button>
+    </div>
+    <hr />
+    <!-- v-once只渲染一次,v-html危险,v-pre 未渲染,v-cloak  -->
+    <div id="app3" v-cloak>
+      {{name}} say {{say}}
+      <div v-once>v-once:{{name}}</div>
+      <div v-html="url">v-html:连接</div>
+      <div v-pre>v-pre:{{name}} say {{say}}</div>
+    </div>
+    <script>
+      let app = new Vue({
+        el: '#app',
+        data: {
+          message: 'Xu'
+        }
+      });
+      //   列表以及计时器
+      let app2 = new Vue({
+        el: '#app2',
+        data: {
+          arr: ['一个人', '两只羊', '三只树'],
+          count: 0
+        },
+        methods: {
+          upCount: function () {
+            this.count++;
+          },
+          deCount: function () {
+            this.count--;
+          }
+        }
+      });
+      // v-once v-html v-pre v-cloak 一次/解析标签/不解析/createdbefore css
+      setTimeout(() => {
+        let app3 = new Vue({
+          el: '#app3',
+          data: {
+            name: 'xu',
+            say: 'hello',
+            url: '<a href="baidu.com">连接</a>'
+          }
+        });
+      }, 2000);
+    </script>
+  </body>
+</html>
