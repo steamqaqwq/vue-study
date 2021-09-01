@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let sex = '男';
+      let student = {
+        name: 'xu',
+        age: 18
+      };
+      Object.defineProperty(student, 'sex', {
+        // value: '男',
+        enumerable: true, //属性是否可枚举,默认false
+        // writable: true, //属性是否可被修改,默认false
+        configrable: true, //属性是否可被删除,默认false
+
+        //用访问器 则不可用value writable正常改写
+        get() {
+          console.log('获取数据');
+          return sex;
+        },
+        set(value) {
+          console.log('修改数据值为', value);
+          sex = value;
+        }
+      });
+    </script>
+  </body>
+</html>

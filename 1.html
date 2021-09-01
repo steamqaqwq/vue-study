@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js" integrity="sha512-o9SZrtqlGkpa7EF+dDrNjEdRFFYhymlrBzDKpolHNolxsyx0IcXAbEm9i1e8QpoiMgEdKZVtY8XiK1t8i6jVDA==" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <h1>{{message}}{{address}}</h1>
+      <a :href="url">跳转</a>
+      <h2>{{school.name}} is {{school.age}}</h2>
+      单向数据绑定:<input type="text" :value="zhi" /> <br />双向数据绑定: <input type="text" v-model:value="zhi" />
+    </div>
+    <script>
+      Vue.config.productionTip = false;
+      new Vue({
+        el: '#box',
+        data: {
+          message: 'hello',
+          address: '湛江',
+          url: 'https://www.baidu.com',
+          school: {
+            name: 'xu',
+            age: '1888'
+          },
+          zhi: 'hhh'
+        }
+      });
+    </script>
+  </body>
+</html>

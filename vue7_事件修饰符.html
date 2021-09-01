@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <div id="box">
+      <!-- 阻止默认事件 -->
+      <a href="baidu.com" @click="showInfo">按钮</a>
+
+      <!-- 阻止事件冒泡 -->
+      <!-- 没有.stop 会提示两次 -->
+      <div @click="showInfo">
+        <button @click.stop="showInfo">按钮2</button>
+      </div>
+    </div>
+    <script>
+      new Vue({
+        el: '#box',
+        data: {},
+        methods: {
+          showInfo() {
+            alert('显示信息');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

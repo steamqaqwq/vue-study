@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据代理</title>
+  </head>
+  <body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <div id="box">{{url}}</div>
+    <script>
+      let vm = new Vue({
+        el: '#box',
+        data: {
+          url: 'http://www.baidu.com',
+          address: '192.158.12.11'
+        }
+      });
+      console.log(vm);
+    </script>
+  </body>
+</html>
