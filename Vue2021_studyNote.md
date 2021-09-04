@@ -12,7 +12,7 @@ vue特点
 3. **虚拟DOM+diff算法**
    - 虚拟创建DOM缓存
    - 用diff算法在缓存基础上增删改查
-   - ![image-20210831205923165](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210831205923165.png)
+   - ![image-20210831205923165](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210831205923165.png)
 
 
 
@@ -31,9 +31,9 @@ istance=实例
 1. js表达式：一个表达式可以生成一个值Date.now()
 2. js代码：if for...
 
-![](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901103706221.png)
+![](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901103706221.png)
 
-### 二、Vue指令
+### 二、Vue绑定指令
 
 ​	插值语法,指令语法
 
@@ -42,11 +42,11 @@ istance=实例
 1. v-bind:href  简写 :href  会变为js表达式  **单向数据绑定**
 2. v-model  **双向数据绑定**  得是输入类元素（有value值)可以产生交互才可用
    - 简写 v-model:value="name"  ==>   v-model="name"
-3. ![image-20210901105514985](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901105514985.png)
+3. ![image-20210901105514985](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901105514985.png)
 
 ### 三、el和data的两种写法
 
-![image-20210901161705956](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901161705956.png)
+![image-20210901161705956](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901161705956.png)
 
 函数式:
 
@@ -67,9 +67,9 @@ new Vue({
 - V：视图(View): 模板
 - VM：视图模型(ViewModel)：Vue实例对象
 
-![image-20210901163752705](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901163752705.png)
+![image-20210901163752705](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901163752705.png)
 
-![image-20210901164203081](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901164203081.png)
+![image-20210901164203081](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901164203081.png)
 
 - data中所有属性，vm上都会有
 - vm上所有属性 及其 Vue原型上所有属性,在Vue模板都可以直接使用
@@ -80,7 +80,7 @@ new Vue({
 
 vm数据为何需要点击才能显示?
 
-![image-20210901165810361](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901165810361.png)
+![image-20210901165810361](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901165810361.png)
 
 **本质就是用Object.defineProperty定义数据**使得数据读取或修改时受监听
 
@@ -108,7 +108,7 @@ Object.defineProperty(student, 'sex', {
 });
 ```
 
-![image-20210901173517397](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901173517397.png)
+![image-20210901173517397](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901173517397.png)
 
 **Vue中的数据代理**
 
@@ -125,11 +125,11 @@ console.log(vm);
 
 
 
--   vm实例上有![image-20210901204841228](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901204841228.png)
+-   vm实例上有![image-20210901204841228](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901204841228.png)
 
 - _data 收集了data中的数据
 
-- 然后用**访问器**获取_data中的数据![image-20210901205048368](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901205048368.png)实现数据代理(通过Object.defineProperty()吧data对象中所有属性添加到vm上)
+- 然后用**访问器**获取_data中的数据![image-20210901205048368](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901205048368.png)实现数据代理(通过Object.defineProperty()吧data对象中所有属性添加到vm上)
 - #访问器 getter setter
 
  数据代理的**好处**:更加方便操作data中的数据
@@ -138,7 +138,9 @@ console.log(vm);
 
 ###  六、事件处理
 
-![image-20210901211223109](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901211223109.png)
+- #### 事件基本使用
+
+![image-20210901211223109](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901211223109.png)
 
 ```html
 <div id="box">
@@ -162,9 +164,11 @@ console.log(vm);
 </script>
 ```
 
-### 七、事件修饰符
+- #### 事件修饰符
 
-![image-20210901223741534](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210901223741534.png)
+- **可以连着写 不过分先后**
+
+![image-20210901223741534](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210901223741534.png)
 
 ```html
 <div id="box">
@@ -194,3 +198,164 @@ console.log(vm);
 鼠标滚动   scroll / wheel
 
 先执行绑定事件,再进行鼠标滚动 (用passive先滚动再执行)
+
+- #### 键盘事件修饰符
+
+- **键盘修饰符结合  keyup.ctrl.y  === ctrl+y**
+
+keyup 与 keydown 
+
+![image-20210903102221371](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210903102221371.png)
+
+Vue.config.keyCodes.huiche = 13 //定义别名
+
+### 七、计算属性
+
+- **计算属性是属性!**<u>直接调用即可</u>
+
+**定义：**要用的属性不存在，需要通过已有的属性进行计算
+
+- 拿已有的属性来计算出的结果就是计算属性 
+
+**原理：**借助Object.defineProperty方法提供的getter和setter
+
+> 可通过插值语法、methods+插值、computed 横向对比理解
+
+**特点：**与methods实现相比,内部有缓存机制,效率更高，调试方便。
+
+- 缓存数据,不需要计算时会拿原有的结果,当依赖的数据变化时重新计算，最终计算属性会在vm上。
+- 无法开启异步任务,需要返回值
+
+完整写法：
+
+```js
+computed: {
+    fullName: {
+        //get有什么作用?读取fullName时会调用,返回值作为fullName的结果
+        //get什么时候调用? 1.初次读取fullName时 2.所依赖数据发生改变
+        get() {
+            return this.firstName + '-' + this.lastName;
+        },
+            // set什么时候调用?fullName被修改的时候
+         set(v) {
+             //一般用于规范
+             const arr = v.split('-');
+             this.firstName = arr[0];
+             this.lastName = arr[1];
+         }
+    }
+}
+});
+```
+
+setter效果
+
+![gif9.3](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/gif9.3.gif)
+
+**简写**（不需要set时,当函数写)
+
+```js
+computed: {
+    fullName() {
+        return this.firstName + '-' + this.lastName;
+    }
+}
+```
+
+### 八、监听属性
+
+- watch 监视属性data、computed
+
+```js
+data: {
+          temperature: 11
+        },
+watch: {
+    temperature: {
+        //   handler当属性发生变化时调用
+        handler(cur, pre) {
+            document.querySelector('span').innerHTML = `当前值为${cur},旧值为${pre}`;
+            console.log(`当前值为${cur},旧值为${pre}`);
+        }
+    }
+}
+```
+
+**watch的配置项**
+
+- **handler函数**当前属性发生变化时调用  参数1 cur  参数2  pre
+
+- **immediate属性**   值true/end   初始化时执行一次handler
+- **deep属性** 值true/end   开启深度监视
+
+**watch的第二种写法**
+
+```js
+vm.$watch('temperature',{
+    immediate:true,
+    handler(cur,pre){
+        console.log(cur)
+    }
+})
+```
+
+**深度监视**
+
+1. Vue中的watch默认不监视对象内部值的改变(一层)
+2. 监视多级结构中某个属性的变化 需要是字符串形式  'numbers.a'
+3. 监视整个结构中所有属性的变化 配置项**deep:true** 深度监视
+
+```js
+//深度监视所有属性
+data: {
+    nums: {
+        a: 10,
+            b: 20
+    }
+},
+    watch: {
+        //   'nums.a': { //单个监视
+        //     handler(v) {
+        //       console.log('a的值改变为', v);
+        //     }
+        //   }
+        nums: {
+            deep: true,
+            handler(cur, pre) {
+                console.log(cur.a);
+            }
+        }
+    }
+```
+
+4. **watch的2种简写** 只需要 handler()时才能
+
+监视的属性当函数用
+
+```js
+watch: {
+    c(cur, pre) {
+        console.log('c的旧值与新值', cur, pre);
+    }
+}
+});
+```
+
+```js
+vm.$watch("c",function(cur,pre){ //不可箭头函数
+    console.log(xxxx)
+})
+```
+
+​	5. 可以执行异步任务  #setTimeout
+
+![image-20210903200704336](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210903200704336.png)
+
+### 九、class样式动态绑定
+
+1. 字符串写法,适用于：样式的类名不确定,需要动态绑定
+2. 数组写法，适用于：要绑定的样式个数不确定、名字也不确定
+3. 对象写法，适用于：要绑定的样式个数确定、名字也确定，但需要根据实际判断启用
+
+
+

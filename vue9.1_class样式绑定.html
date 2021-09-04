@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+    <style>
+      .basic {
+        background-color: aqua;
+        height: 500px;
+        width: 500px;
+        font-size: 40px;
+        border: 1px solid red;
+        text-align: center;
+        line-height: 500px;
+      }
+      .borderSort {
+        border-radius: 10%;
+      }
+      .color1 {
+        background-color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app" class="basic" :class="colorArr" @click="changeColor">一个普通样式</div>
+
+    <script>
+      Vue.config.productionTip = false;
+      //创建Vue实例,得到 ViewModel
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          color1: 'color1',
+          colorArr: ['color1', 'color2', 'color3']
+        },
+        methods: {
+          changeColor() {
+            let num = Math.floor(Math.random() * 3);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

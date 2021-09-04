@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div>数字a:{{nums.a}}</div>
+      <div>数字b:{{nums.b}}</div>
+      <div>数字简写c:{{c}}</div>
+
+      <button @click="nums.a++">a++</button>
+      <button @click="nums.b++">b++</button>
+      <button @click="c--">c--</button>
+    </div>
+
+    <script>
+      Vue.config.productionTip = false;
+      //创建Vue实例,得到 ViewModel
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          c: 999,
+          nums: {
+            a: 10,
+            b: 20
+          }
+        },
+        methods: {},
+        watch: {
+          //   'nums.a': {
+          //     handler(v) {
+          //       console.log('a的值改变为', v);
+          //     }
+          //   }
+          nums: {
+            deep: true,
+            handler(cur, pre) {
+              console.log(cur.a);
+            }
+          },
+          c(cur, pre) {
+            console.log('c的旧值与新值', cur, pre);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

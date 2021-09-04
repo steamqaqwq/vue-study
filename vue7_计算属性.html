@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      请输入姓: <input v-model="firstName" />
+      <br />
+      请输入名:<input v-model="lastName" />
+      <div>您的姓名为:{{firstName}}-{{lastName}}</div>
+      <div>GetName:{{getName()}}</div>
+      <div>computed:{{fullName}}</div>
+    </div>
+
+    <script>
+      Vue.config.productionTip = false;
+      //创建Vue实例,得到 ViewModel
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          firstName: 'XX',
+          lastName: 'UU'
+        },
+        methods: {
+          getName() {
+            return this.firstName + '-' + this.lastName;
+          }
+        },
+        // computed: {
+        //   fullName: {
+        //     //get有什么作用?读取fullName时会调用,返回值作为fullName的结果
+        //     //get什么时候调用? 1.初次读取fullName时 2.所依赖数据发生改变
+        //     get() {
+        //       return this.firstName + '-' + this.lastName;
+        //     },
+        //     // set什么时候调用?fullName被修改的时候
+        //     set(v) {
+        //       //用于规范
+        //       const arr = v.split('-');
+        //       this.firstName = arr[0];
+        //       this.lastName = arr[1];
+        //     }
+        //   }
+        // }
+        computed: {
+          fullName() {
+            return this.firstName + '-' + this.lastName;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

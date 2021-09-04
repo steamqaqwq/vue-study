@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div>今天{{temperature}}度,{{whatTemp}}</div>
+      <button @click="changeT">改变</button>
+      <span></span>
+    </div>
+
+    <script>
+      Vue.config.productionTip = false;
+      //创建Vue实例,得到 ViewModel
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          temperature: 11
+        },
+        methods: {
+          changeT() {
+            this.temperature += 10;
+          }
+        },
+        computed: {
+          whatTemp() {
+            let temp = this.temperature;
+            if (temp < 10) return '冷';
+            else if (temp < 25) return '温和';
+            else return '热';
+          }
+        },
+        watch: {
+          temperature: {
+            //   handler当属性发生变化时调用
+            handler(cur, pre) {
+              document.querySelector('span').innerHTML = `当前值为${cur},旧值为${pre}`;
+              console.log(`当前值为${cur},旧值为${pre}`);
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
