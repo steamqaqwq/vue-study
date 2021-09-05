@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <script>
+      let data = {
+        name: '张三',
+        sex: '男',
+        age: 18
+      };
+      const obs = new Observer(data);
+      console.log(obs);
+
+      //   准备一个vm实例对象
+      let vm = {};
+      vm._data = data = obs;
+
+      function Observer(obj) {
+        // 汇总数据
+        const keys = Object.keys(obj);
+        // 遍历
+        keys.forEach((k) => {
+          Object.defineProperty(this, k, {
+            get() {
+              return obj[k];
+            },
+            set(val) {
+              obj[k] = val;
+            }
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

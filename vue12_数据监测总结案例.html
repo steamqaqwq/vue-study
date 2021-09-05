@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      学生:{{student.name}}<br />
+      朋友们:
+      <ul>
+        <li v-for="i of student.friends">{{i.name}}--{{i.age}}</li>
+      </ul>
+      <br />
+      爱好
+      <ul>
+        <li v-for="i of student.hobby">{{i}}</li>
+      </ul>
+      <button @click="addfriend">添加朋友</button>
+      <button @click="removeFriend">删除朋友</button>
+      <button @click="updateHobby">更新爱好</button>
+    </div>
+
+    <script>
+      Vue.config.productionTip = false;
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          student: {
+            name: '张三',
+            age: 10,
+            hobby: ['吃', '喝', '赌'],
+            friends: [
+              { name: '李四', age: '20' },
+              { name: '王五', age: '15' }
+            ]
+          }
+        },
+        methods: {
+          addSex() {
+            Vue.set(this.student, 'sex', '男');
+          },
+          addfriend() {
+            this.student.friends.push({ name: '行', age: '99' });
+          },
+          removeFriend() {
+            this.student.friends.pop();
+          },
+          updateHobby() {
+            //   splice(index,deleteNums,Add1newVal)
+            this.student.hobby.splice(0, 1, '赛风');
+            //splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。
+            // Vue.set(this.student.hobby, 0, '新爱好');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

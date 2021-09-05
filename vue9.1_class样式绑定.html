@@ -8,6 +8,7 @@
     <script src="./js/vue.js"></script>
     <style>
       .basic {
+        position: relative;
         background-color: aqua;
         height: 500px;
         width: 500px;
@@ -22,11 +23,28 @@
       .color1 {
         background-color: red;
       }
+      .color2 {
+        background-color: burlywood;
+      }
+      .color3 {
+        background-color: cornflowerblue;
+      }
+      .size {
+        font-size: 100px;
+      }
+      .button {
+        position: absolute;
+        bottom: 30%;
+        left: 45%;
+      }
     </style>
   </head>
 
   <body>
-    <div id="app" class="basic" :class="colorArr" @click="changeColor">一个普通样式</div>
+    <div id="app" class="basic" :class="modelObj" @click="changeColor">
+      一个普通样式
+      <!-- <button class="button" @click="changeColor">改变颜色</button> -->
+    </div>
 
     <script>
       Vue.config.productionTip = false;
@@ -35,11 +53,20 @@
         el: '#app',
         data: {
           color1: 'color1',
-          colorArr: ['color1', 'color2', 'color3']
+          modelArr: ['borderSort', 'color2', 'size'],
+          colorArr: ['color1', 'color2', 'color3'],
+          modelObj: {
+            borderSort: true,
+            color2: true,
+            size: false
+          }
         },
         methods: {
           changeColor() {
-            let num = Math.floor(Math.random() * 3);
+            // let index = Math.floor(Math.random() * 3);
+            // console.log(index);
+            // this.color1 = this.colorArr[index];
+            // this.modelArr = this.modelArr.unshift();
           }
         }
       });

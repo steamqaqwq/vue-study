@@ -351,11 +351,307 @@ vm.$watch("c",function(cur,pre){ //不可箭头函数
 
 ![image-20210903200704336](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210903200704336.png)
 
-### 九、class样式动态绑定
+### 九、class样式动态绑定.
+
+> :class="modelObj"
 
 1. 字符串写法,适用于：样式的类名不确定,需要动态绑定
+
+   - 根据需求绑定
+
 2. 数组写法，适用于：要绑定的样式个数不确定、名字也不确定
+
+   - 可以unshift()等数组操作增删改
+   - 数组内样式同时使用
+
 3. 对象写法，适用于：要绑定的样式个数确定、名字也确定，但需要根据实际判断启用
 
+   - ```js
+     modelObj: {
+         borderSort: true,
+         color2: true,
+         size: false,
+     }
+     ```
+
+style内联样式绑定
+
+- 对象写法
+
+```js
+:style="styleObj"
+styleObj:{
+    fontSize:40px //font-size 去'-'驼峰命名
+}
+```
+
+- 数组写法
+  - 数组中得是样式对象
+
+```js
+:style="styleArr"
+styleArr:[
+    {
+    fontSize:40px //font-size 去'-'驼峰命名
+		},
+        {
+              backgroundColor:'blue'
+}]
+```
+
+### 十、条件渲染
+
+- v-show="表达式  true/false" 显示隐藏  //频率高
+- v-if="表达式"  v-else-if  v-elsecc
+  - 不允许打断   v-if  div  v-else-if
+
+!!!**template**标签 不会打乱dom结构  (虚拟dom)
+
+```html
+<template v-if="n>=3"> //只能配合v-if 不能v-show
+    <h2>sdfsdfsdf</h2>
+</template>
+```
+
+![image-20210904112917462](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210904112917462.png)
+
+没有template标签自动解析
+
+### 十一、列表渲染
+
+v-for 遍历数组
+
+```js
+<li v-for="item in persons">{{item.age}}</li>
+data: {
+    persons: [
+        { id: 1, name: '张三', age: '18' },
+        { id: 2, name: '李四', age: '15' },
+        { id: 3, name: '王五', age: '33' }
+    ]
+},
+```
+
+v-for 遍历对象
+
+```js
+<li v-for="i,k of car">{{k}} -- {{i}}</li>
+car: {
+    name: '奥迪',
+        price: '999',
+            color: '黑'
+}
+```
+
+- for in 得item,index值   for of 得value,key值
+
+#### **key的原理**
+
+> :key="key"
+
+**个人理解：**	
+
+​	key作为虚拟dom diff算法比较时的唯一标识,按key对比数据,相同复用,不同则产生新的真实dom 。没写key则Vue会自动将index作为默认key值,当出现破坏顺序的行为(增删),则无输入数值的dom效率低界面没问题,而需要输入数值的界面则会出错。
+
+![image-20210904174955771](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210904174955771.png)
+
+错误key值
+
+![image-20210904175126335](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210904175126335.png)
+
+正确key值
+
+![image-20210904175313081](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210904175313081.png)
+
+####  列表过滤(筛选)
+
+**str.indexOf('') // 空字符可检索 默认为0**
+
+- 配合过滤可以检索全部
+
+1. Watch实现:
+
+```js
+watch: {
+    filterV: {
+        immediate: true,
+        handler(cur) {
+            let filters = this.persons.filter((item) => {
+                return item.name.indexOf(cur) != -1;
+            });
+            this.personshow = filters;
+        }
+    }
+
+```
+
+2. computed实现:
+
+```js
+computed: {
+    personshow() {
+        return this.persons.filter((item) => {//属性的返回值
+            return item.name.indexOf(this.filterV) != -1;//返回的数组
+        });
+    }
+}
+```
 
 
+
+**vscode 小技巧**:
+
+- //#region 开始折叠
+- //#endregion结束折叠
+- 可以强制折叠
+
+#### 列表排序
+
+- sort 会改变原数组 
+
+```js
+personshow() {
+    // 先筛选后排序
+    let arr = this.persons.filter((item) => {
+        return item.name.indexOf(this.filterV) != -1;
+    });
+    //排序
+    // return arr.sort((person1, person2) => {
+    //   if (this.sortType == 2) {
+    //     return person2.age - person1.age;
+    //   } else if (this.sortType == 1) {
+    //     return person1.age - person2.age;
+    //   0.}
+    // });
+    //简写
+    // 判断是否需要排序
+    if (this.sortType) {
+        arr.sort((p1, p2) => {
+            return this.sortType === 1 ? p2.age - p1.age : p1.age - p2.age;
+        });
+    }
+    return arr;
+}
+```
+
+### 十二、数据监测原理!!!
+
+先上一个Vue bug! :+1:
+
+首先写一个更新数据的按钮和方法
+
+```js
+methods: {
+    updateData() {
+        this.persons[0].age = 20;
+        this.persons[0].sex = '男';
+    }
+},
+```
+
+![GIF2021.9.5](C:\Users\QAQWQ\Desktop\GIF2021.9.5.gif)
+
+当觉得一个一个改属性,不如一块改如下时
+
+```js
+methods: {
+    updateData() {
+        this.persons[0] = { id: 1, name: '张三', age: '20', sex: '男' };
+    }
+},
+```
+
+神奇的发现Vue中数据没有改变！但实际vm上的数据已经改变了!可以说是改了但没完全改。
+
+![GIF2021-9-5.2](C:\Users\QAQWQ\Desktop\GIF2021-9-5.2.gif)
+
+#### **底层数据监测原理**
+
+需要一个中转站(Observer)来存储data变量 并为data对象中每一个属性(含嵌套)都进行监测(访问器)
+
+再通过 vm._data = data = obsever 赋值给 _data 对象
+
+模拟数据监测：
+
+```js
+let data = {
+    name: '张三',
+    sex: '男',
+    age: 18
+};
+const obs = new Observer(data);
+console.log(obs);
+
+//   准备一个vm实例对象
+let vm = {};
+vm._data = data = obs;
+
+function Observer(obj) {
+    // 汇总数据
+    const keys = Object.keys(obj);
+    // 遍历
+    keys.forEach((k) => {
+        Object.defineProperty(this, k, {
+            get() {
+                return obj[k];
+            },
+            set(val) {
+                obj[k] = val;
+            }
+        });
+    });
+}
+```
+
+<img src="C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905164636844.png" alt="image-20210905164636844" style="zoom: 80%;" />看上去差不多,但和真实实现还是有差距
+
+就比如Vue中 会自动在vm上创建一个和data属性中同样的属性名 数据代理
+
+并且对Object属性进行深度递归，使得每个属性都有自己的访问器。
+
+#### Vue.set()添加响应式数据：
+
+Vue.set(target,key,value)
+
+-  target不允许是vm的实例对象n以及vm的根数据对象vm._data等
+
+vm.$set(target,key,value)同理
+
+```js
+Vue.set(vm._data.age,"李四",18)
+通过数据代理
+Vue.set(vm.age,"李四",18)
+```
+
+
+
+![image-20210905174340916](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905174340916.png)
+
+<img src="C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905174307911.png" alt="image-20210905174307911" style="zoom: 80%;" />
+
+<img src="C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905174409769.png" alt="image-20210905174409769" style="zoom: 80%;" />
+
+  vue数据监测总结
+
+![image-20210905205632687](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905205632687.png)
+
+数据劫持→属性带有访问器
+
+```js
+ updateHobby() {
+            //   splice(index,deleteNums,Add1newVal)
+            this.student.hobby.splice(0, 1, '赛风');
+            //splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。
+            // Vue.set(this.student.hobby, 0, '新爱好');
+          }
+```
+
+### 十三、收集表单数据
+
+Vue勾选框 默认查询 checked值 true/false  一般设置value值
+
+- 若是多组勾选框(checkbox)则需要设置初始值为**数组** 字符串则是true/false
+
+
+
+![image-20210905234442118](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905234442118.png)

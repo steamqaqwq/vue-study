@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <h2>人员排序</h2>
+      <input type="text" v-model="filterV" /> <button @click="sortType=1">年龄升序</button> <button @click="sortType=2">年龄降序</button> <button @click="sortType=0">原序列</button><br />
+      <button @click="updateData">更新张三数据</button>
+
+      <ul>
+        <li v-for="item in personshow" :key="item.id">{{item.name}} - {{item.age}} - {{item.sex}}</li>
+      </ul>
+    </div>
+
+    <script>
+      Vue.config.productionTip = false;
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          filterV: '',
+          sortType: 0,
+          persons: [
+            { id: 1, name: '张三', age: '18', sex: '女' },
+            { id: 2, name: '李四', age: '15', sex: '男' },
+            { id: 3, name: '王五', age: '1', sex: '女' },
+            { id: 4, name: '王胜', age: '33', sex: '女' }
+          ]
+        },
+        methods: {
+          updateData() {
+            this.persons[0] = { id: 1, name: '张三', age: '20', sex: '男' };
+          }
+        },
+        computed: {
+          personshow() {
+            // 先筛选后排序
+            let arr = this.persons.filter((item) => {
+              return item.name.indexOf(this.filterV) != -1;
+            });
+            // 判断是否需要排序
+            if (this.sortType) {
+              arr.sort((p1, p2) => {
+                return this.sortType === 1 ? p2.age - p1.age : p1.age - p2.age;
+              });
+            }
+            return arr;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
