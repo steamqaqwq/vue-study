@@ -6,17 +6,97 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script src="./js/vue.js"></script>
+    <style>
+      #app {
+        margin: 100px 200px;
+        /* height: 500px; */
+        width: 250px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        padding: 10px;
+        flex-flow: column;
+        border-radius: 5px;
+        background-color: rgba(207, 132, 35, 0.448);
+      }
+      #app > div {
+        margin-top: 10px;
+      }
+      h2 {
+        text-align: center;
+      }
+      input {
+        border-radius: 5px;
+      }
+      button {
+        width: 100px;
+        height: 30px;
+        margin-top: 5px;
+        border-radius: 10%;
+      }
+    </style>
   </head>
 
   <body>
-    <div id="app"></div>
+    <form id="app" @submit.prevent="jsonData">
+      <h2>账号注册</h2>
+      <div>
+        <span>账号：</span>
+        <input type="text" v-model="username" />
+      </div>
+      <div>
+        <span>密码：</span>
+        <input type="password" v-model="userPa" />
+      </div>
+      <div>
+        <span>性别：</span>
+        男<input type="radio" name="sex" v-model="sex" value="男" /> 女<input type="radio" name="sex" v-model="sex" value="女" />
+      </div>
+      <div>
+        <span>爱好：</span>
+        抽烟<input type="checkbox" name="hobby" v-model="hobby" value="抽烟" /> 喝酒<input type="checkbox" name="hobby" v-model="hobby" value="喝酒" /> 打牌<input type="checkbox" name="hobby" v-model="hobby" value="打牌" />
+      </div>
+      <div>
+        校区选择：
+        <select v-model="school" name="school" id="">
+          <option value="">请选择校区</option>
+          <option value="北京">北京</option>
+          <option value="上海">上海</option>
+          <option value="广州">广州</option>
+          <option value="深圳">深圳</option>
+        </select>
+      </div>
+      <div>
+        <div>其他信息：</div>
+        <textarea style="width: 95%" name="" id="" cols="30" rows="5" v-model="otherMsg" placeholder="请输入。。"></textarea>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center">
+        阅读并接受协议<input type="checkbox" name="readV" v-model="readV" id="" />
+        <a style="margin-left: 5px" href="http://www.baidu.com">《用户协议》</a>
+        <button type="submit">提交</button>
+      </div>
+    </form>
 
     <script>
       Vue.config.productionTip = false;
       let vm = new Vue({
         el: '#app',
-        data: { c },
-        methods: {}
+        data: {
+          studentInfo: {
+            username: '',
+            userPa: '',
+            sex: '',
+            hobby: [],
+            school: '',
+            otherMsg: '',
+            readV: ''
+          }
+        },
+        methods: {
+          jsonData() {
+            console.log(JSON.stringify(this.data));
+          }
+        }
       });
     </script>
   </body>

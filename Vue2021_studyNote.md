@@ -3,7 +3,7 @@ Vuejs
 
 ## vue Day1
 
-vue： **渐进式**js框架  由浅入深  
+vue： **渐进式**js框架  由浅入深  帮你操作DOM  
 
 vue特点
 
@@ -36,6 +36,8 @@ istance=实例
 ### 二、Vue绑定指令
 
 ​	插值语法,指令语法
+
+![image-20210906154744043](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906154744043.png)
 
 ​	绑定↓
 
@@ -349,7 +351,7 @@ vm.$watch("c",function(cur,pre){ //不可箭头函数
 
 ​	5. 可以执行异步任务  #setTimeout
 
-![image-20210903200704336](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210903200704336.png)
+![image-20210903200704336](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210903200704336.png)
 
 ### 九、class样式动态绑定.
 
@@ -413,7 +415,7 @@ styleArr:[
 </template>
 ```
 
-![image-20210904112917462](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210904112917462.png)
+![image-20210904112917462](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210904112917462.png)
 
 没有template标签自动解析
 
@@ -453,15 +455,15 @@ car: {
 
 ​	key作为虚拟dom diff算法比较时的唯一标识,按key对比数据,相同复用,不同则产生新的真实dom 。没写key则Vue会自动将index作为默认key值,当出现破坏顺序的行为(增删),则无输入数值的dom效率低界面没问题,而需要输入数值的界面则会出错。
 
-![image-20210904174955771](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210904174955771.png)
+![image-20210904174955771](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210904174955771.png)
 
 错误key值
 
-![image-20210904175126335](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210904175126335.png)
+![image-20210904175126335](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210904175126335.png)
 
 正确key值
 
-![image-20210904175313081](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210904175313081.png)
+![image-20210904175313081](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210904175313081.png)
 
 ####  列表过滤(筛选)
 
@@ -549,7 +551,7 @@ methods: {
 },
 ```
 
-![GIF2021.9.5](C:\Users\QAQWQ\Desktop\GIF2021.9.5.gif)
+![GIF2021.9.5](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/GIF2021.9.5.gif)
 
 当觉得一个一个改属性,不如一块改如下时
 
@@ -563,7 +565,7 @@ methods: {
 
 神奇的发现Vue中数据没有改变！但实际vm上的数据已经改变了!可以说是改了但没完全改。
 
-![GIF2021-9-5.2](C:\Users\QAQWQ\Desktop\GIF2021-9-5.2.gif)
+![GIF2021-9-5.2](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/GIF2021-9-5.2.gif)
 
 #### **底层数据监测原理**
 
@@ -603,7 +605,7 @@ function Observer(obj) {
 }
 ```
 
-<img src="C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905164636844.png" alt="image-20210905164636844" style="zoom: 80%;" />看上去差不多,但和真实实现还是有差距
+<img src="https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210905164636844.png" alt="image-20210905164636844" style="zoom: 80%;" />看上去差不多,但和真实实现还是有差距
 
 就比如Vue中 会自动在vm上创建一个和data属性中同样的属性名 数据代理
 
@@ -625,15 +627,15 @@ Vue.set(vm.age,"李四",18)
 
 
 
-![image-20210905174340916](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905174340916.png)
+![image-20210905174340916](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210905174340916.png)
 
-<img src="C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905174307911.png" alt="image-20210905174307911" style="zoom: 80%;" />
+<img src="https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210905174307911.png" alt="image-20210905174307911" style="zoom: 80%;" />
 
-<img src="C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905174409769.png" alt="image-20210905174409769" style="zoom: 80%;" />
+<img src="https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210905174409769.png" alt="image-20210905174409769" style="zoom: 80%;" />
 
   vue数据监测总结
 
-![image-20210905205632687](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905205632687.png)
+![image-20210905205632687](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210905205632687.png)
 
 数据劫持→属性带有访问器
 
@@ -648,10 +650,97 @@ Vue.set(vm.age,"李四",18)
 
 ### 十三、收集表单数据
 
-Vue勾选框 默认查询 checked值 true/false  一般设置value值
+**小事项**
 
-- 若是多组勾选框(checkbox)则需要设置初始值为**数组** 字符串则是true/false
+1. select 选择框绑定 select即可 而不是option
+2. ~~v-model 是可以和value共存的~~
+3. Vue勾选框(checkbox) 默认查询 checked值 true/false  一般设置value值
+   - 若是多组勾选框(checkbox)则需要设置初始值为**数组** 字符串则是true/false
+4. form 可以 @submit.prevent=""阻止
+5. JSON.stringify()转成json格式数据
+6. 最好把收集的数据整合到一个属性中 不要直接是根下的属性值
+
+**v-model的三个修饰符**
+
+- v-model.number 收集数字 一般和input type="number "和 一块使用
+- v-model.lazy 失去焦点时才收集 常与textarea 配合
+- v-model.trim 收集数据去掉多余空格
+
+![image-20210905234442118](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210905234442118.png)
+
+### 十四、过滤器(管道符)* vue3已删除
+
+```js
+{{time | timeFormat | sliceTime}}
+//局部过滤器函数写在vm的filters
+filters:{
+    timeFormat(value){return },
+    sliceTime(value){return }
+}
+//全局过滤器函数写在Vue
+Vue.filter('timeFormat',function(value){return ...})
+```
+
+time作为timeFormat函数的默认参数→函数返回值再作为sliceTime的参数 最终返回值作为整个表达式的值
+
+- timeFormat("YYYY:MM:DD")若已有参数 则变为2个参数timeFormat(value,"YYY..")
+
+转换时间戳
+
+第三方库 day.js
+
+### 十五、内置指令+
 
 
 
-![image-20210905234442118](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210905234442118.png)
+![image-20210906150341112](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906150341112.png)
+
+1. v-text="name"  只会当成正常文本解析,不如插值语法
+
+![image-20210906150538532](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906150538532.png)
+
+2. v-html="name" 支持解析标签 有**安全性问题**
+
+   #### Cookie原理
+
+   ![image-20210906151254313](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906151254313.png)
+
+- 不允许跨游览器
+
+document.cookie  可以获取页面cookie但必须没有httpOnly保护
+
+![image-20210906152122801](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906152122801.png)
+
+3. v-cloak 没有值 
+   - 可以将未解析的模板暂时隐藏 vue实例创建完毕并接管容器时删除v-cloak属性
+   - css [v-cloak]{display:none}
+
+4. v-once  没有值
+   - v-once所在节点初次渲染后，就视为静态内容
+   - 以后数据的改变不会引起v-once所在结构的更新，可以用于优化性能
+
+5. v-pre 没有值
+   - 使得Vue不去解析，加快编译
+
+### 十六、自定义指令
+
+![image-20210906154858169](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906154858169.png)
+
+解析标签 == 操作DOM元素
+
+```html
+<div>当前数值为：{{n}}</div>
+<div>指令放大十倍的数值为：<span v-big="n"></span></div>
+```
+
+```js
+directives: {
+    //big 何时调用? 1.指令与元素成功绑定(once) 2.指令数据发生变化时更新
+    big(element, binding) {
+        console.log(element, binding);
+        element.innerText = binding.value * 10;
+    }
+}
+```
+
+![image-20210906160801962](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906160801962.png)
