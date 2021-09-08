@@ -37,7 +37,7 @@ istance=实例
 
 ​	插值语法,指令语法
 
-![image-20210906154744043](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906154744043.png)
+![image-20210906154744043](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210906154744043.png)
 
 ​	绑定↓
 
@@ -693,23 +693,23 @@ time作为timeFormat函数的默认参数→函数返回值再作为sliceTime的
 
 
 
-![image-20210906150341112](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906150341112.png)
+![image-20210906150341112](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210906150341112.png)
 
 1. v-text="name"  只会当成正常文本解析,不如插值语法
 
-![image-20210906150538532](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906150538532.png)
+![image-20210906150538532](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210906150538532.png)
 
 2. v-html="name" 支持解析标签 有**安全性问题**
 
    #### Cookie原理
 
-   ![image-20210906151254313](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906151254313.png)
+   ![image-20210906151254313](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210906151254313.png)
 
 - 不允许跨游览器
 
 document.cookie  可以获取页面cookie但必须没有httpOnly保护
 
-![image-20210906152122801](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906152122801.png)
+![image-20210906152122801](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210906152122801.png)
 
 3. v-cloak 没有值 
    - 可以将未解析的模板暂时隐藏 vue实例创建完毕并接管容器时删除v-cloak属性
@@ -724,7 +724,7 @@ document.cookie  可以获取页面cookie但必须没有httpOnly保护
 
 ### 十六、自定义指令
 
-![image-20210906154858169](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906154858169.png)
+![image-20210906154858169](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210906154858169.png)
 
 解析标签 == 操作DOM元素
 
@@ -735,7 +735,7 @@ document.cookie  可以获取页面cookie但必须没有httpOnly保护
 
 ```js
 directives: {
-    //big 何时调用? 1.指令与元素成功绑定(once) 2.指令数据发生变化时更新
+    //big 何时调用? 1.指令与元素成功绑定(未渲染)(once) 2.指令数据发生变化时更新
     big(element, binding) {
         console.log(element, binding);
         element.innerText = binding.value * 10;
@@ -743,4 +743,131 @@ directives: {
 }
 ```
 
-![image-20210906160801962](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210906160801962.png)
+![image-20210906160801962](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210906160801962.png)
+
+(element)input.focus() 渲染后聚焦元素，所以需要生命周期指定时期执行函数
+
+inserted(){} //指令所在元素被插入页面时
+
+update(){}// 指令所在的模板被重新解析时
+
+```js
+directives: {
+    fbind:{
+        bind(element,binding),
+        inserted(element,binding){},
+        update(element,binding){} //bind 和 update一般一样
+    }
+}
+```
+
+指令名：
+
+- 指令名不支持用驼峰命名  需要用'-'来分隔
+
+- 指令名有'-'需要补双引号  如bigNumber  需要写成 'big-number'(element,binding){}
+
+指令里(directives)的this是windows
+
+全局指令: Vue.directive ()
+
+```js
+Vue.directive('fbind',{
+    bind(),
+    inserted(),
+    update(e,b)
+})
+Vue.directive('big',function(e,b){
+   	//.....
+})
+```
+
+### 十七、生命周期!!!
+
+生命周期函数
+
+debugger;暂停调试
+
+- mounted()
+  - Vue完成模板解析并且把初始的真实DOM元素放入页面后（挂载完毕）调用mounted
+- 
+
+![image-20210908211808935](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210908211808935.png)
+
+<img src="https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210908212132061.png" alt="image-20210908212132061"  />
+
+![image-20210908214132337](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210908214132337.png)
+
+template 会替换整个root 容器
+
+- template里必须有根元素 div包裹  不能用template标签当根元素 
+- V3 解决只能包div问题 和template标签
+
+![image-20210908221819897](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210908221819897.png)
+
+beforeDestory 立遗嘱  不管怎么死的都会执行
+
+```html
+ <div id="app"></div>
+    <script>
+      Vue.config.productionTip = false;
+      let vm = new Vue({
+        el: '#app',
+        template: `
+            <div>
+                <div>{{n}}</div>
+                <button @click="destroyVm">byebye</button>    
+            </div>
+        `,
+        data: {
+          n: 1
+        },
+        methods: {
+          destroyVm() {
+            this.$destroy();
+          }
+        },
+        // 初始化生命周期事件,还没有数据代理
+        beforeCreate() {
+          console.log(this);
+          debugger;
+          console.log('beforeCreate');
+        },
+        // 创建vm实例对象 初始化检测、数据代理
+        created() {
+          console.log('created');
+        },
+        //创建虚拟DOM,此时对未经Vue编译的DOM操作最终都不奏效
+        beforeMount() {
+          console.log('beforeMount');
+        },
+        // Vue完成模板解析并且把初始的真实DOM元素放入页面后（挂载完毕）调用mounted
+        mounted() {
+          //重要钩子
+          this.timer = setInterval(() => {
+            this.n++;
+            console.log(this.n);
+          }, 1000);
+          console.log('mounted');
+        },
+        // 新数据，旧页面
+        beforeUpdate() {
+          console.log('beforeupdate');
+        },
+        // 新数据，新页面，页面和数据保持同步
+        updated() {
+          console.log('updated');
+        },
+        // vm中所有 data,methods 指令都可用，无法更新数据。用来执行一些关闭定时器等收尾工作。
+        beforeDestroy() {
+          //重要钩子
+          clearInterval(this.timer);
+          console.log('beforeDestroy');
+        },
+        destroyed() {
+          console.log('byebye');
+        }
+      });
+    </script>
+```
+

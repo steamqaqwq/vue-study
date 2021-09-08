@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script>
+      Vue.config.productionTip = false;
+      let vm = new Vue({
+        el: '#app',
+        template: `
+            <div>
+                <div>{{n}}</div>
+                <button @click="destroyVm">byebye</button>    
+            </div>
+        `,
+        data: {
+          n: 1
+        },
+        methods: {
+          destroyVm() {
+            this.$destroy();
+          }
+        },
+        // 初始化生命周期事件,还没有数据代理
+        beforeCreate() {
+          console.log(this);
+          debugger;
+          console.log('beforeCreate');
+        },
+        // 创建vm实例对象 初始化检测、数据代理
+        created() {
+          console.log('created');
+        },
+        //创建虚拟DOM,此时对未经Vue编译的DOM操作最终都不奏效
+        beforeMount() {
+          console.log('beforeMount');
+        },
+        // Vue完成模板解析并且把初始的真实DOM元素放入页面后（挂载完毕）调用mounted
+        mounted() {
+          //重要钩子
+          this.timer = setInterval(() => {
+            this.n++;
+            console.log(this.n);
+          }, 1000);
+          console.log('mounted');
+        },
+        // 新数据，旧页面
+        beforeUpdate() {
+          console.log('beforeupdate');
+        },
+        // 新数据，新页面，页面和数据保持同步
+        updated() {
+          console.log('updated');
+        },
+        // vm中所有 data,methods 指令都可用，无法更新数据。用来执行一些关闭定时器等收尾工作。
+        beforeDestroy() {
+          //重要钩子
+          clearInterval(this.timer);
+          console.log('beforeDestroy');
+        },
+        destroyed() {
+          console.log('byebye');
+        }
+      });
+    </script>
+  </body>
+</html>
