@@ -871,3 +871,115 @@ beforeDestory 立遗嘱  不管怎么死的都会执行
     </script>
 ```
 
+### 十八、 组件
+
+#### 组件理解
+
+ 传统编写网页存在问题
+
+1. 依赖关系混乱，不好维护
+2. 代码复用率不高 （非复制）
+
+![image-20210909105815046](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210909105815046.png)
+
+组件——实现应用中局部功能代码和资源的集合
+
+![image-20210909110111542](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210909110111542.png)
+
+![image-20210909110248851](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210909110248851.png)
+
+与模块的区别：
+
+- 模块只针对js文件，简化js的编写,提高运行效率（拆分js)
+- 组件 复用编码，简化项目编程，提高运行效率
+
+#### 组件的使用
+
+非单文件组件
+
+- 一个文件中含n个组件  .html内写
+
+单文件组件
+
+- 一个文件中只包含1个组件 .vue
+
+组件三部曲
+
+1. 创建组件
+
+2. 注册组件+模板
+
+   - 局部注册：配置项components: {school: school }
+
+   - 全局注册： Vue.component('school',school)
+
+3. 组件标签
+
+```js
+//创建组件
+      const school = Vue.extend({
+        template: `
+        <div>
+            <h2>学校：{{name}}</h2>
+        </div>
+        `,
+// el: '#app',  不能有el配置,最终所有组件都归vm管理,vm决定组件使用位置
+        data() {
+          // 使数据独立 修改对象属性数据会联动
+          return {
+            name: '岭师'
+          };
+        },
+        methods: {}
+      });
+      new Vue({
+        el: '#app',
+        //注册组件（局部注册）
+        components: {
+          school: school
+        }
+      });
+```
+
+#### 组件注意事项
+
+![image-20210909212209092](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210909212209092.png)
+
+#### 组件嵌套
+
+- 一般应用开发  用app组件来管理其他组件  root只需负责app组件
+
+```js
+const app = Vue.extend({
+        template: `
+            <div>
+                <hi></hi>
+                <school></school>
+            </div>  
+          `,
+        components: {
+          school,
+          hi
+        }
+      });
+new Vue({
+    template: '<div><app></app></div>',
+    el: '#root',
+    data: {},
+    methods: {},
+    components: {
+        app
+    }
+});
+```
+
+
+
+![image-20210909231035068](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210909231035068.png)
+
+![image-20210909231424655](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210909231424655.png)
+
+#### VueComponent构造函数
+
+![image-20210909232051196](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210909232051196.png)
+

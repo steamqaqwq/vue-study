@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script>
+      Vue.config.productionTip = false;
+      const student = Vue.extend({
+        template: `
+         <div>
+            <h2>{{name}}</h2>{{n}}
+            <button @click="n++">点击n++</button>
+         </div>
+        `,
+        data() {
+          return {
+            name: 'xxu',
+            n: 0
+          };
+        }
+      });
+      const school = Vue.extend({
+        components: { student },
+        template: `
+        <div>
+            <h2 >学校：{{name}}</h2>{{n}}
+            <button @click="n++">点击n++</button>
+            <student></student>
+            </div>
+            
+        `,
+        data() {
+          return {
+            name: '家里蹲大学',
+            n: 0
+          };
+        },
+        methods: {}
+      });
+
+      const hi = Vue.extend({
+        template: `
+            <div>{{hi}}</div>
+          `,
+        data() {
+          return {
+            hi: 'hihihi'
+          };
+        }
+      });
+      const app = Vue.extend({
+        template: `
+            <div>
+                <hi></hi>
+                <school></school>
+            </div>  
+          `,
+        components: {
+          school,
+          hi
+        }
+      });
+      new Vue({
+        template: '<div><app></app></div>',
+        el: '#root',
+        data: {},
+        methods: {},
+        components: {
+          app
+        }
+      });
+    </script>
+  </body>
+</html>

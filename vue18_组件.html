@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <school></school>
+      <student></student>
+    </div>
+
+    <script>
+      Vue.config.productionTip = false;
+      //创建组件
+      const school = Vue.extend({
+        template: `
+        <div>
+            <h2 >学校：{{name}}</h2>{{n}}
+            <button @click="n++">点击n++</button>
+            </div>
+            
+        `,
+        // el: '#app',  不能有el配置,最终所有组件都归vm管理,vm决定组件使用位置
+        data() {
+          // 使数据独立 修改对象属性数据会联动
+          return {
+            name: '岭师',
+            n: 0
+          };
+        },
+        methods: {}
+      });
+      const student = Vue.extend({
+        template: `
+         <div>
+            <h2>{{name}}</h2>{{n}}
+            <button @click="n++">点击n++</button>
+         </div>
+        `,
+        data() {
+          return {
+            name: 'xxu',
+            n: 0
+          };
+        }
+      });
+      new Vue({
+        el: '#app',
+        //注册组件（局部注册）
+        components: {
+          school: school,
+          student
+        }
+      });
+    </script>
+  </body>
+</html>
