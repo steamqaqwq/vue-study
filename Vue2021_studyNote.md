@@ -893,7 +893,7 @@ beforeDestory 立遗嘱  不管怎么死的都会执行
 - 模块只针对js文件，简化js的编写,提高运行效率（拆分js)
 - 组件 复用编码，简化项目编程，提高运行效率
 
-#### 组件的使用
+#### 组件的使用 -- 非单文件
 
 非单文件组件
 
@@ -982,4 +982,98 @@ new Vue({
 #### VueComponent构造函数
 
 ![image-20210909232051196](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210909232051196.png)
+
+调用Vue.extend返回的都是个全新VueComponent 
+
+- 源码剖析 摘取部分源码  不难看出每次调用一个新的VueComponent 初始化组件并返回
+
+- ```js
+  Vue.extend = function (extendOptions) {
+        .....
+        var Sub = function VueComponent (options) {
+          this._init(options);
+        };
+      	....
+        return Sub
+      };
+    }
+  ```
+
+![image-20210910094041880](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910094041880.png)
+
+#### ！！！Vue和VueComponent重要内置关系
+
+- ```js
+  VueComponent.prototype.__proto__ == Vue.prototype
+  ```
+
+  - ```prototype``` 原型对象  #只有函数才有的 显性原型属性
+  - ```__proto__```同样原型对象  #只有是对象实例才有的  隐性原型属性
+
+- **正因为有这样一个重要关系,使得组件实例对象vc可以访问Vue原型上的方法和属性**
+
+![image-20210910100353939](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910100353939.png)
+
+#### 单文件组件
+
+组要构成
+
+- main.js  入口文件  应用App
+- index.html   主页面 引入main.js
+- App.js   整合所有组件
+- 其它.vue 组件  实现各类功能模块
+
+.vue文件案例  School.vue
+
+```vue
+
+<template>
+    <div>
+        <h2 class="color">我的大学：{{name}}</h2>
+        <student></student>
+    </div>
+</template>
+
+<script>
+export default {
+    name:"School", //定义别名
+    components:{
+        Student
+    },
+    data(){
+        return {
+            name:'清华大学'
+        }
+    }
+}
+</script>
+
+<style>
+    .color{
+        font-size: 20px;
+        color:bisque
+    }
+</style>
+```
+
+### 十九、Vue脚手架
+
+vue-cli(command line interface)
+
+#### 安装vue-cli
+
+配置淘宝镜像
+
+npm config set registry https://registry.npm.taobao.org
+
+1. 安装 ```npm install -g @vue/cli```
+2. 切换到要安装文件夹  vue create  vue_test
+3. cd vue_test
+4. npm run serve
+   - ![image-20210910160459520](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910160459520.png)
+
+5. 访问页面
+   - ![image-20210910160606019](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910160606019.png)
+
+#### 分析脚手架
 

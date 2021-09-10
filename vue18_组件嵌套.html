@@ -13,6 +13,7 @@
 
     <script>
       Vue.config.productionTip = false;
+      let Schoolvc;
       const student = Vue.extend({
         template: `
          <div>
@@ -35,7 +36,7 @@
             <button @click="n++">点击n++</button>
             <student></student>
             </div>
-            
+
         `,
         data() {
           return {
@@ -43,7 +44,10 @@
             n: 0
           };
         },
-        methods: {}
+        methods: {},
+        created() {
+          Schoolvc = this;
+        }
       });
 
       const hi = Vue.extend({
@@ -61,14 +65,14 @@
             <div>
                 <hi></hi>
                 <school></school>
-            </div>  
+            </div>
           `,
         components: {
           school,
           hi
         }
       });
-      new Vue({
+      let vm = new Vue({
         template: '<div><app></app></div>',
         el: '#root',
         data: {},
