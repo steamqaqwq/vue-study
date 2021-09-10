@@ -1077,3 +1077,91 @@ npm config set registry https://registry.npm.taobao.org
 
 #### 分析脚手架
 
+#### index.html 和 main.js 分析
+
+![image-20210910165714973](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910165714973.png)
+
+index.html 详解
+
+```html
+<head>
+    <meta charset="utf-8" />
+    <!-- 针对IE游览器的一个特殊配置,含义让IE游览器以最高性能渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- 开启移动端理想视口 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!-- 配置页签图标  BASE_URL == public -->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <!-- 找到package.json 的 name -->
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <!-- 不支持js时,展现 -->
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+```
+
+main.js解析
+
+```js
+// 引入的是残缺版的Vue 没有模板解析器
+import Vue from 'vue'
+import App from './App.vue'
+// 关闭Vue多余的提示
+Vue.config.productionTip = false
+
+new Vue({
+    el:'#root',
+    render: h => h(App)
+    // render 用来替代模板解析器 渲染元素
+    //全写↓↓
+    // render(createElement){
+    //     return createElement(App)
+    // 也可以这么写return createElement('h2','hello')
+    // }
+})
+```
+
+![image-20210910203602357](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910203602357.png)
+
+#### 不同版本的Vue
+
+1. vue.js与vue.runtime.xxx.js的区别：
+   1. vue.js是完整版的Vue，包含：核心功能 + 模板解析器。
+   2. vue.runtime.xxx.js是运行版的Vue，只包含：核心功能；没有模板解析器。
+2. 因为vue.runtime.xxx.js没有模板解析器，所以不能使用template这个配置项，需要使用render函数接收到的createElement函数去指定具体内容。
+3. 为什么vue默认要用残缺版？
+   - 减少文件体积
+   - 模板解析器不适合在webpack打包好的项目里
+     - webpack本来就将文件解析了 .vue->.js 
+
+#### vue.config.js配置
+
+vue.config.js 可以自定义一些配置项 如关闭语法提示、更改入口文件名
+
+- 使用vue inspect > output.js可以查看到Vue脚手架的默认配置。
+
+- 具体参考https://cli.vuejs.org/zh/config/#vue-config-js
+
+#### 脚手架文件结构
+
+```js
+├── node_modules 
+├── public
+│   ├── favicon.ico: 页签图标
+│   └── index.html: 主页面
+├── src
+│   ├── assets: 存放静态资源
+│   │   └── logo.png
+│   │── component: 存放组件
+│   │   └── HelloWorld.vue
+│   │── App.vue: 汇总所有组件
+│   │── main.js: 入口文件
+├── .gitignore: git版本管制忽略的配置
+├── babel.config.js: babel的配置文件
+├── package.json: 应用包配置文件 
+├── README.md: 应用描述文件
+├── package-lock.json：包版本控制文件
+```
+
