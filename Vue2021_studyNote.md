@@ -1165,3 +1165,106 @@ vue.config.js 可以自定义一些配置项 如关闭语法提示、更改入�
 ├── package-lock.json：包版本控制文件
 ```
 
+### 二十、脚手架中的配置项
+
+#### ref属性  (id获取元素)
+
+1. 被用来给元素或子组件注册引用信息（id的替代者）
+2. 应用在html标签上获取的是真实DOM元素，应用在组件标签上是组件实例对象（vc）
+3. 使用方式：
+   1. 打标识：```<h1 ref="xxx">.....</h1>``` 或 ```<School ref="xxx"></School>```
+   2. 获取：```this.$refs.xxx```
+
+#### props配置项 （接收数据)
+
+1. 功能：让组件接收外部传过来的数据
+
+2. 传递数据：```<Demo name="xxx"/>```
+
+3. 接收数据：
+
+   1. 第一种方式（只接收）：```props:['name'] ```
+
+   2. 第二种方式（限制类型）：```props:{name:String}```
+
+   3. 第三种方式（限制类型、限制必要性、指定默认值）：
+
+      ```js
+      props:{
+      	name:{
+      	type:String, //类型
+      	required:true, //必要性
+      	default:'老王' //默认值
+      	}
+      }
+      ```
+
+   > 备注：props是只读的，Vue底层会监测你对props的修改，如果进行了修改，就会发出警告，若业务需求确实需要修改，那么请复制props的内容到data中一份，然后去修改data中的数据。
+
+#### mixin(混入)
+
+1. 功能：可以把多个组件共用的配置提取成一个混入对象
+
+2. 使用方式：
+
+   第一步定义混合：
+
+   ```
+   a.js
+   {
+       data(){....},
+       methods:{....}
+       ....
+   }
+   ```
+
+   第二步使用混入：
+
+   - main.js全局混入：```Vue.mixin(xxx)```
+   - xx.vue局部混入：配置项：```mixins:['xxx']	```
+
+3. 数据冲突：
+   - 当出现混合出现冲突时,优先原本数据(除了生命周期钩子)
+
+### 插件
+
+1. 功能：用于增强Vue
+
+2. 本质：包含install方法的一个对象，install的第一个参数是Vue，第二个以后的参数是插件使用者传递的数据。
+
+3. 定义插件：
+
+   js文件->导出->引入
+
+   ```js
+   对象.install = function (Vue, options) {
+       // 1. 添加全局过滤器
+       Vue.filter(....)
+   
+       // 2. 添加全局指令
+       Vue.directive(....)
+   
+       // 3. 配置全局混入(合)
+       Vue.mixin(....)
+   
+       // 4. 添加实例方法
+       Vue.prototype.$myMethod = function () {...}
+       Vue.prototype.$myProperty = xxxx
+   }
+   ```
+
+4. 使用插件：```Vue.use()```
+
+#### scoped样式
+
+1. 作用：让样式在局部生效，防止冲突。
+
+2. 写法：```<style scoped>```
+
+   - ```<style lang="less" scoped>```使用less预编译css
+
+3. 安装less
+
+   - npm view less-loader version
+
+   - npm i less-loader@7
