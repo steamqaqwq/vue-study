@@ -1266,5 +1266,21 @@ vue.config.js 可以自定义一些配置项 如关闭语法提示、更改入�
 3. 安装less
 
    - npm view less-loader version
+- npm i less-loader@7
 
-   - npm i less-loader@7
+
+
+### 二十一、todoList案例
+
+问题一：
+
+- 兄弟组件怎么传数据？
+- 父子组件怎么传数据？
+  - 父→子  props
+  - 子→父 ?
+
+- uid怎么不重复?
+  - uuid  精简 nanoid
+    - npm i nanoid
+    - 使用 import {nanoid }from 'nanoid'   调用nanoid()即可
+
