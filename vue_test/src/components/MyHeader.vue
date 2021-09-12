@@ -4,6 +4,7 @@
       type="text"
       placeholder="请输入你的任务名称，按回车键确认"
       @keyup.enter="addData"
+      v-model="title"
     />
   </div>
 </template>
@@ -13,9 +14,21 @@ import { nanoid } from "nanoid";
 
 export default {
   name: "MyHeader",
+  data() {
+    return {
+      title: "",
+    };
+  },
   methods: {
     addData(e) {
+      // 校验输入的数据
+      if (!this.title.trim()) {
+        alert("输入不能为空");
+        return;
+      }
       this.getTodo({ id: nanoid(), name: e.target.value, checked: false });
+      // 清空input输入的数据
+      this.title = "";
     },
   },
   props: ["getTodo"],

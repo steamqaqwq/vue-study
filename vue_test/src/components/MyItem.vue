@@ -1,17 +1,28 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" :checked="todo.checked" />
+      <input
+        type="checkbox"
+        :checked="todo.checked"
+        @change="handlerCheck(todo.id)"
+      />
       <span>{{ todo.name }}</span>
     </label>
-    <button class="btn btn-danger" style="display: none">删除</button>
+    <button class="btn btn-danger" @click="delHandler(todo.id)">删除</button>
   </li>
 </template>
 
 <script>
 export default {
   name: "MyItem",
-  props: ["todo"],
+  methods: {
+    delHandler(id) {
+      if (confirm("确定删除吗")) {
+        this.delTodo(id);
+      }
+    },
+  },
+  props: ["todo", "handlerCheck", "delTodo"],
 };
 </script>
 
@@ -48,5 +59,11 @@ li:before {
 
 li:last-child {
   border-bottom: none;
+}
+li:hover {
+  background-color: rgba(216, 178, 178, 0.786);
+}
+li:hover button {
+  display: block;
 }
 </style>
