@@ -1402,7 +1402,10 @@ vc.$off()  //解绑所有
 
 vc/vm.$destroy() //只要摧毁vc实例  **自定义**事件消除 原生事件依旧可用
 
+#### 使用自定义事件完善todoList
 
+- 将所有因需要**子传父**的函数 都写为自定义事件而不是属性
+- 删除props接受的函数
 
 #### 组件的自定义事件总结
 
@@ -1433,4 +1436,101 @@ vc/vm.$destroy() //只要摧毁vc实例  **自定义**事件消除 原生事件�
 6. 组件上也可以绑定原生DOM事件，需要使用```native```修饰符。
 
 7. 注意：通过```this.$refs.xxx.$on('atguigu',回调)```绑定自定义事件时，回调<span style="color:red">要么配置在methods中</span>，<span style="color:red">要么用箭头函数</span>，否则this指向会出问题！
+
+### 二十三、事件总线
+
+![image-20210913230037789](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210913230037789.png)
+
+完善todoList   APP.vue  :left_right_arrow: MyItem.vue​ 使用事件总线 进行 孙-父传递数据
+
+- main.js 引入事件总线  
+
+  - ```js
+    beforeCreate(){
+        Vue.prototype.$bus = this
+    }
+    ```
+
+- 要接受数据的需要绑定事件 ``` mounted() →this.$bus.$on("NAME",this.fun)``` 且最好备好销毁绑定事件
+
+  - ```js
+    mounted() {
+        this.$bus.$on("handlerCheck", this.handlerCheck);
+        this.$bus.$on("delTodo", this.delTodo);
+    },
+    beforeDestroy(){
+        this.$bus.$off("handlerCheck");
+        this.$bus.$off("delTodo");
+    }
+    ```
+
+- 发送数据``` this.$bus.$emit("NAME",data.)```
+
+- 开发者工具Vue 中   发送数据方 为 <ROOT>
+
+
+
+#### 全局事件总线（GlobalEventBus）
+
+1. 一种组件间通信的方式，适用于<span style="color:red">任意组件间通信</span>。
+
+2. 安装全局事件总线：
+
+   ```js
+   new Vue({
+   	......
+   	beforeCreate() {
+   		Vue.prototype.$bus = this //安装全局事件总线，$bus就是当前应用的vm
+   	},
+       ......
+   }) 
+   ```
+
+3. 使用事件总线：
+
+   1. 接收数据：A组件想接收数据，则在A组件中给$bus绑定自定义事件，事件的<span style="color:red">回调留在A组件自身。</span>
+
+      ```js
+      methods(){
+        demo(data){......}
+      }
+      ......
+      mounted() {
+        this.$bus.$on('xxxx',this.demo)
+      }
+      ```
+
+   2. 提供数据：```this.$bus.$emit('xxxx',数据)```
+
+4. 最好在beforeDestroy钩子中，用$off去解绑<span style="color:red">当前组件所用到的</span>事件。
+
+
+
+### 二十四、消息订阅与发布（pubsub）
+
+1. 一种组件间通信的方式，适用于<span style="color:red">任意组件间通信</span>。
+
+2. 使用步骤：
+
+   1. 安装pubsub：```npm i pubsub-js```
+
+   2. 引入: ```import pubsub from 'pubsub-js'```
+
+   3. 接收数据：A组件想接收数据，则在A组件中订阅消息，订阅的<span style="color:red">回调留在A组件自身。</span>
+
+      ```js
+      methods(){
+        demo(data){......}
+      }
+      ......
+      mounted() {
+        this.pid = pubsub.subscribe('xxx',this.demo) //订阅消息
+      }
+      ```
+
+   4. 提供数据：```pubsub.publish('xxx',数据)```
+
+   5. 最好在beforeDestroy钩子中，用```PubSub.unsubscribe(pid)```去<span style="color:red">取消订阅。</span>
+
+   6. 最好用事件总线，本质相同，但事件总线全程由Vue操作
 

@@ -26,12 +26,13 @@ export default {
         alert("输入不能为空");
         return;
       }
-      this.getTodo({ id: nanoid(), name: e.target.value, checked: false });
+      const objData = { id: nanoid(), name: e.target.value, checked: false };
+      this.$emit("getTodo", objData);
       // 清空input输入的数据
       this.title = "";
     },
   },
-  props: ["getTodo"],
+  props: [],
 };
 </script>
 

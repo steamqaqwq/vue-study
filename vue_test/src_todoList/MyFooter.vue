@@ -6,7 +6,7 @@
     <span>
       <span>已完成{{ doneMsg.dones }}</span> / 全部{{ doneMsg.listLen }}</span
     >
-    <button class="btn btn-danger" @click="delAllTodos()">
+    <button class="btn btn-danger" @click="$emit('delAllTodos')">
       清除已完成任务
     </button>
   </div>
@@ -15,7 +15,7 @@
 <script>
 export default {
   name: "MyFooter",
-  props: ["doneMsg", "delAllTodos", "checkAllTodos"],
+  props: ["doneMsg"],
   computed: {
     // isAll() {
     //   return (
@@ -29,7 +29,8 @@ export default {
         );
       },
       set(value) {
-        this.checkAllTodos(value);
+        this.$emit("checkAllTodos", value);
+        // this.checkAllTodos(value);
       },
     },
   },
