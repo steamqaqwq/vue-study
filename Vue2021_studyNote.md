@@ -1364,3 +1364,73 @@ js数组常用操作:
    2. LocalStorage存储的内容，需要手动清除才会消失。
    3. ```xxxxxStorage.getItem(xxx)```如果xxx对应的value获取不到，那么getItem的返回值是null。
    4. ```JSON.parse(null)```的结果依然是null。
+
+### 二十三、自定义事件
+
+自定义事件 如 click keyup 等内置事件
+
+给VC实例对象绑定自定事件  用$emit('funName')触发事件
+
+给组件绑定自定义事件就算是 原生事件名 也会当成自定义事件
+
+- 如 @click='' 会被当自定义事件需要 $emit()  所以加上修饰符.native化身原生事件
+
+#### 三种子传父：
+
+1. 传统方式  父传函数 子props接受调用
+
+2. 自定义事件  父@getSonMsg=fun1 子触发事件再调用this.$emit('getSonMsg',params)
+
+   - 父子件给子组件绑定事件  子组件发射事件 
+     - 给谁绑 谁发射
+
+   - 同样可以对自定义事件使用修饰符
+
+3. 父通过ref获取vc实例对象 父this.$refs.student.$on('getSonMsg',fun1) 
+
+   - 相当于$emit 但更灵活 可以用在钩子函数上
+   - fun1可以直接写成匿名函数直接调用 无需再methods定义函数 但需注意this
+   - **fun1里的this是 vc  如果要vm则需要使用箭头函数**
+
+#### 自定义事件如何解绑
+
+vc.$off('getSonMsg')  // 单个解绑
+
+vc.$off(['getSonMsg','event'])  //多个解绑
+
+vc.$off()  //解绑所有
+
+vc/vm.$destroy() //只要摧毁vc实例  **自定义**事件消除 原生事件依旧可用
+
+
+
+#### 组件的自定义事件总结
+
+1. 一种组件间通信的方式，适用于：<strong style="color:red">子组件 ===> 父组件</strong>
+
+2. 使用场景：A是父组件，B是子组件，B想给A传数据，那么就要在A中给B绑定自定义事件（<span style="color:red">事件的回调在A中</span>）。
+
+3. 绑定自定义事件：
+
+   1. 第一种方式，在父组件中：```<Demo @atguigu="test"/>```  或 ```<Demo v-on:atguigu="test"/>```
+
+   2. 第二种方式，在父组件中：
+
+      ```js
+      <Demo ref="demo"/>
+      ......
+      mounted(){
+         this.$refs.xxx.$on('atguigu',this.test)
+      }
+      ```
+
+   3. 若想让自定义事件只能触发一次，可以使用```once```修饰符，或```$once```方法。
+
+4. 触发自定义事件：```this.$emit('atguigu',数据)```		
+
+5. 解绑自定义事件```this.$off('atguigu')```
+
+6. 组件上也可以绑定原生DOM事件，需要使用```native```修饰符。
+
+7. 注意：通过```this.$refs.xxx.$on('atguigu',回调)```绑定自定义事件时，回调<span style="color:red">要么配置在methods中</span>，<span style="color:red">要么用箭头函数</span>，否则this指向会出问题！
+
