@@ -999,7 +999,7 @@ new Vue({
     }
   ```
 
-![image-20210910094041880](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910094041880.png)
+![image-20210910094041880](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210910094041880.png)
 
 #### ！！！Vue和VueComponent重要内置关系
 
@@ -1012,7 +1012,7 @@ new Vue({
 
 - **正因为有这样一个重要关系,使得组件实例对象vc可以访问Vue原型上的方法和属性**
 
-![image-20210910100353939](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910100353939.png)
+![image-20210910100353939](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210910100353939.png)
 
 #### 单文件组件
 
@@ -1070,16 +1070,16 @@ npm config set registry https://registry.npm.taobao.org
 2. 切换到要安装文件夹  vue create  vue_test
 3. cd vue_test
 4. npm run serve
-   - ![image-20210910160459520](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910160459520.png)
+   - ![image-20210910160459520](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210910160459520.png)
 
 5. 访问页面
-   - ![image-20210910160606019](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910160606019.png)
+   - ![image-20210910160606019](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210910160606019.png)
 
 #### 分析脚手架
 
 #### index.html 和 main.js 分析
 
-![image-20210910165714973](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910165714973.png)
+![image-20210910165714973](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210910165714973.png)
 
 index.html 详解
 
@@ -1123,7 +1123,7 @@ new Vue({
 })
 ```
 
-![image-20210910203602357](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210910203602357.png)
+![image-20210910203602357](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210910203602357.png)
 
 #### 不同版本的Vue
 
@@ -1439,7 +1439,7 @@ vc/vm.$destroy() //只要摧毁vc实例  **自定义**事件消除 原生事件�
 
 ### 二十三、事件总线
 
-![image-20210913230037789](C:\Users\QAQWQ\AppData\Roaming\Typora\typora-user-images\image-20210913230037789.png)
+![image-20210913230037789](https://gitee.com/steamqaqwq/drawingbed/raw/master/markdown/image-20210913230037789.png)
 
 完善todoList   APP.vue  :left_right_arrow: MyItem.vue​ 使用事件总线 进行 孙-父传递数据
 
@@ -1506,7 +1506,7 @@ vc/vm.$destroy() //只要摧毁vc实例  **自定义**事件消除 原生事件�
 
 
 
-### 二十四、消息订阅与发布（pubsub）
+### 二十四、消息订阅与发布（pubsub第三方）
 
 1. 一种组件间通信的方式，适用于<span style="color:red">任意组件间通信</span>。
 
@@ -1534,3 +1534,80 @@ vc/vm.$destroy() //只要摧毁vc实例  **自定义**事件消除 原生事件�
 
    6. 最好用事件总线，本质相同，但事件总线全程由Vue操作
 
+### 二十五、Vue封装的过渡与动画
+
+1. 作用：在插入、更新或移除 DOM元素时，在合适的时候给元素添加样式类名。
+
+2. 写法：
+
+   1. 准备好样式：
+
+      - 元素进入的样式：
+        1. v-enter：进入的起点
+        2. v-enter-active：进入过程中
+        3. v-enter-to：进入的终点
+      - 元素离开的样式：
+        1. v-leave：离开的起点
+        2. v-leave-active：离开过程中
+        3. v-leave-to：离开的终点
+
+   2. 使用```<transition>```包裹要过度的元素，并配置name属性：
+
+      ```vue
+      <transition name="hello">
+      	<h1 v-show="isShow">你好啊！</h1>
+      </transition>
+      ```
+
+   3. 备注：若有多个元素需要过度，则需要使用：```<transition-group>```，且每个元素都要指定```key```值。
+
+### 二十六、vue脚手架配置代理
+
+#### 方法一
+
+​	在vue.config.js中添加如下配置：
+
+```js
+devServer:{
+  proxy:"http://localhost:5000"
+}
+```
+
+说明：
+
+1. 优点：配置简单，请求资源时直接发给前端（8080）即可。
+2. 缺点：不能配置多个代理，不能灵活的控制请求是否走代理。
+3. 工作方式：若按照上述配置代理，当请求了前端不存在的资源时，那么该请求会转发给服务器 （优先匹配前端资源）
+
+#### 方法二
+
+​	编写vue.config.js配置具体代理规则：
+
+```js
+module.exports = {
+	devServer: {
+      proxy: {
+      '/api1': {// 匹配所有以 '/api1'开头的请求路径
+        target: 'http://localhost:5000',// 代理目标的基础路径
+        changeOrigin: true,
+        pathRewrite: {'^/api1': ''}
+      },
+      '/api2': {// 匹配所有以 '/api2'开头的请求路径
+        target: 'http://localhost:5001',// 代理目标的基础路径
+        changeOrigin: true,
+        pathRewrite: {'^/api2': ''}
+      }
+    }
+  }
+}
+/*
+   changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000
+   changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:8080
+   changeOrigin默认值为true
+*/
+```
+
+说明：
+
+1. 优点：可以配置多个代理，且可以灵活的控制请求是否走代理。
+2. 缺点：配置略微繁琐，请求资源时必须加前缀。

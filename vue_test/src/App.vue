@@ -72,6 +72,13 @@ export default {
       // 还可以使用过滤实现
       // this.todoList = this.todoList.filter((todo) => todo.id != id);
     },
+    updateTodo(id, name) {
+      this.todoList.forEach((todo) => {
+        if (todo.id == id) {
+          todo.name = name;
+        }
+      });
+    },
     checkAllTodos(checked) {
       this.todoList.forEach((item) => {
         item.checked = checked;
@@ -93,6 +100,12 @@ export default {
   mounted() {
     this.$bus.$on("handlerCheck", this.handlerCheck);
     this.$bus.$on("delTodo", this.delTodo);
+    this.$bus.$on("updateTodo", this.updateTodo);
+  },
+  beforeDestroy() {
+    this.$bus.$off("handlerCheck");
+    this.$bus.$off("delTodo");
+    this.$bus.$off("updateTodo");
   },
 };
 </script>
@@ -122,6 +135,16 @@ body {
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
+}
+.btn-edit {
+  margin: 0 5px;
+  color: #fff;
+  background-color: #abf374;
+  border: 1px solid #88da49;
+}
+.btn-edit:hover {
+  color: #fff;
+  background-color: #88da49;
 }
 .btn:focus {
   outline: none;
